@@ -15,6 +15,7 @@ const deepClone = (target, map = new WeakMap()) => {
 
     //3.处理可遍历的对象
     switch(targetType) {
+        //Set对象
         case '[object Set]':
             cloneTarget = new Set();
             map.set(target, cloneTarget);
@@ -38,14 +39,10 @@ const deepClone = (target, map = new WeakMap()) => {
             map.set(target, cloneTarget);
             console.dir('+++1' + target);
             console.log('+++2' + JSON.stringify(map.get(target)));
-            for(let key in target) {
-                if(target.hasOwnProperty(key)) {
-                    console.log(map.get(target));
-                    console.log(target[key]);
-                    console.log(key + ':');
-                    cloneTarget[key] = deepClone(target[key], map)
-                }
-            }
+            [...Object.keys(target), ...Object.getOwnPropertySymbols(target)].forEach((item) => {
+                console.log(item + ':');
+                cloneTarget[item] = deepClone(target[item], map)
+            });
         default:
             return target;
     }
