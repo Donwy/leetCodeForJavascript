@@ -51,7 +51,7 @@ function inOrder(root) {
         const node = stack.pop();
         res.push(node.val)
         if(node.right) {
-            cur = node.right;
+            cur = node.right;            //如果右节点也有子左节点，还是用cur遍历加入，不能直接压入栈push()
         }
 
     }
